@@ -1,0 +1,25 @@
+CREATE TABLE Users (
+    userId  INTEGER       UNIQUE ON CONFLICT ROLLBACK
+                          PRIMARY KEY ASC
+                          NOT NULL,
+    name    VARCHAR (50)  NOT NULL,
+    address VARCHAR (250)
+);
+
+CREATE TABLE Accounts (
+    accountId INTEGER         UNIQUE
+                              NOT NULL
+                              PRIMARY KEY,
+    userId    INTEGER (10),
+    balance   DECIMAL (15, 3),
+    currency  VARCHAR (10)
+);
+
+CREATE TABLE Transactions (
+    transactionId INTEGER         NOT NULL
+                                  UNIQUE
+                                  PRIMARY KEY AUTOINCREMENT,
+    accountId     INTEGER         REFERENCES Accounts (accountId)
+                                  NOT NULL,
+    amount        DECIMAL (15, 3)
+);
